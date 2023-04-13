@@ -1,0 +1,477 @@
+\documentclass[11pt]{article}
+
+% Language setting
+\usepackage[turkish]{babel}
+\usepackage{pythonhighlight}
+
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=2cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{verbatim}
+\usepackage{fancyhdr} % for header and footer
+\usepackage{titlesec}
+\usepackage{parskip}
+
+\setlength{\parindent}{0pt}
+
+\titleformat{\subsection}[runin]{\bfseries}{\thesubsection}{1em}{}
+
+\pagestyle{fancy} % activate the custom header/footer
+
+% define the header/footer contents
+\lhead{\small{23BLM-4014 Yapay Sinir Ağları Ara Sınav Soru ve Cevap Kağıdı}}
+\rhead{\small{Dr. Ulya Bayram}}
+\lfoot{}
+\rfoot{}
+
+% remove header/footer on first page
+\fancypagestyle{firstpage}{
+  \lhead{}
+  \rhead{}
+  \lfoot{}
+  \rfoot{\thepage}
+}
+ 
+
+\title{Çanakkale Onsekiz Mart Üniversitesi, Mühendislik Fakültesi, Bilgisayar Mühendisliği Akademik Dönem 2022-2023\\
+Ders: BLM-4014 Yapay Sinir Ağları/Bahar Dönemi\\ 
+ARA SINAV SORU VE CEVAP KAĞIDI\\
+Dersi Veren Öğretim Elemanı: Dr. Öğretim Üyesi Ulya Bayram}
+\author{%
+\begin{minipage}{\textwidth}
+\raggedright
+Öğrenci Adı Soyadı: Emircan Ağaç\\ % Adınızı soyadınızı ve öğrenci numaranızı noktaların yerine yazın
+Öğrenci No: 190401038
+\end{minipage}%
+}
+
+\date{14 Nisan 2023}
+
+\begin{document}
+\maketitle
+
+\vspace{-.5in}
+\section*{Açıklamalar:}
+\begin{itemize}
+    \item Vizeyi çözüp, üzerinde aynı sorular, sizin cevaplar ve sonuçlar olan versiyonunu bu formatta PDF olarak, Teams üzerinden açtığım assignment kısmına yüklemeniz gerekiyor. Bu bahsi geçen PDF'i oluşturmak için LaTeX kullandıysanız, tex dosyasının da yer aldığı Github linkini de ödevin en başına (aşağı url olarak) eklerseniz bonus 5 Puan! (Tavsiye: Overleaf)
+    \item Çözümlerde ya da çözümlerin kontrolünü yapmada internetten faydalanmak, ChatGPT gibi servisleri kullanmak serbest. Fakat, herkesin çözümü kendi emeğinden oluşmak zorunda. Çözümlerinizi, cevaplarınızı aşağıda belirttiğim tarih ve saate kadar kimseyle paylaşmayınız. 
+    \item Kopyayı önlemek için Github repository'lerinizin hiçbirini \textbf{14 Nisan 2023, saat 15:00'a kadar halka açık (public) yapmayınız!} (Assignment son yükleme saati 13:00 ama internet bağlantısı sorunları olabilir diye en fazla ekstra 2 saat daha vaktiniz var. \textbf{Fakat 13:00 - 15:00 arası yüklemelerden -5 puan!}
+    \item Ek puan almak için sağlayacağınız tüm Github repository'lerini \textbf{en geç 15 Nisan 2023 15:00'da halka açık (public) yapmış olun linklerden puan alabilmek için!}
+    \item \textbf{14 Nisan 2023, saat 15:00'dan sonra gönderilen vizeler değerlendirilmeye alınmayacak, vize notu olarak 0 (sıfır) verilecektir!} Son anda internet bağlantısı gibi sebeplerden sıfır almayı önlemek için assignment kısmından ara ara çözümlerinizi yükleyebilirsiniz yedekleme için. Verilen son tarih/saatte (14 Nisan 2023, saat 15:00) sistemdeki en son yüklü PDF geçerli olacak.
+    \item Çözümlerin ve kodların size ait ve özgün olup olmadığını kontrol eden bir algoritma kullanılacaktır. Kopya çektiği belirlenen vizeler otomatikman 0 (sıfır) alacaktır. Bu nedenle çözümlerinizi ve kodlarınızı yukarıda sağladığım gün ve saatlere kadar kimseyle paylaşmayınız.
+    \item Bu vizeden alınabilecek en yüksek not 100'dür. Toplam aldığınız puan 100'ü geçerse, aldığınız not 100'e sabitlenecektir.
+    \item LaTeX kullanarak PDF oluşturanlar öz geçmişlerine LaTeX bildiklerini de eklemeyi unutmasınlar :)
+    \item Bu vizedeki soruların çözümleri ve tex dosyası için istediğiniz kadar sayıda Github repository'si oluşturabilirsiniz. Sadece yukarıda belirttiğim tarihlerde (14 Nisan 2023 saat 15:00 ile 15 Nisan 2023 saat 15:00 arasında) public yapmayı/halka açmayı ve Github profilinizi de öz geçmişinize eklemeyi unutmayın :)
+    \item Bilgisayarınıza hiçbir program kurmadan, Overleaf, Google Colab, Kaggle gibi ortamlar üzerinden bu vizeyi tamamlamanız mümkün. İyi çalışmalar!!
+\end{itemize}
+
+(Ekstra 5 puan) \url{OdevinTexDosyasınınGithubLinkiniburayakoyun.com}
+
+\newpage
+\section{(Toplam 10 Puan) Hopfield Networks:}
+
+\subsection{(2 Puan)} \textbf{ChatGPT’ye size Hopfield Network’ler ile ilgili detaylı bilgi vermesini isteyin. Sorduğunuz soruyu, ChatGPT'nin çıkartığı cevabı aşağı koyun. Bu cevapta anlamadığınız terimleri de ChatGPT’ye sorup, sorduğunuz soruları ve ChatGPT’nin verdiği cevapları da sırayla aşağı koyun.}
+
+Hopfield ağları, yapay sinir ağlarının bir türüdür ve özellikle hatırlama (memory) ve optimize etme (optimization) problemlerini çözmek için kullanılır. İlk olarak John Hopfield tarafından 1982 yılında tanıtılmıştır.
+
+Bu ağlar, bir dizi nöronun etkileşimi ile birbirleriyle bağlantılıdır ve her nöron, diğer nöronların sinyallerine duyarlıdır. Bu ağlar, asenkron ve eşzamanlı olarak çalışabilirler. Asenkron Hopfield ağları, her nöronun kendi hızında ve ayrı bir şekilde çalıştığı durumlardır. Eşzamanlı Hopfield ağları ise, tüm nöronların aynı anda çalıştığı durumlardır. Hopfield ağları, öğrenme (learning) ve hatırlama (recall) adı verilen iki ana işlemle çalışırlar. Öğrenme, Hopfield ağının öğrenmek istediğimiz bir modeli temsil etmesine yardımcı olur. Model, ağın nöronlarının belirli bir şekilde birbirine bağlandığı ağırlık matrisi şeklinde tutulur. Hatırlama, ağa bir veri örneği verilerek, modeldeki en yakın belleği (memory) çıkarmayı içerir. Hopfield ağları ayrıca, çözücü problemlerin çözümünde kullanılabilir. Özellikle, bir dizi kısıtlama (constraint) tarafından tanımlanan bir optimize etme problemi için kullanılabilirler. Bu problemi çözmek için, problemdeki her kısıtlama bir nörona atanır ve nöronlar birbirleriyle bağlantılıdır. Bu bağlantılar, kısıtlamaların karşılanmasını sağlayacak şekilde ayarlanır. Hopfield ağları, yapay sinir ağları arasında basitlikleri ve esneklikleri nedeniyle hala yaygın olarak kullanılmaktadırlar. Ancak, büyük veri kümelerindeki performansları sınırlıdır ve bu nedenle daha büyük ve karmaşık veri kümelerinde kullanılmaları önerilmez.
+
+\subsection{(8 Puan)} \textbf{ChatGPT’nin açıklamalarından ne anladığınızı buraya kendi kelimelerinizle özetleyin. Örneğin ``Hopfield Network nedir? Ne işe yarar? Neden bilmemiz gerekir bunu? Gerçek hayatta kullanılıyor mu?'' gibi. Anlamadığınız kısımlar varsa ve ChatGPT’nin açıklamaları yeterli gelmezse internet dahil farklı kaynaklardan araştırıp, bilgilerin doğruluğunu sorgulamakta serbestsiniz. Konuyu doğru anlayıp anlamamanız puana etki edecektir. Kullandığınız kaynakları da belirtin!}
+
+Hopfield sinir ağı bir veya daha fazla tam bağlantılı tekrarlayan nöron içeren tek bir katmandan oluşur. Hopfield ağı genellikle otomatik ilişkilendirme ve optimizasyon görevleri için kullanılır.
+
+Hopfield ağı, ilişkisel bir bellek sistemi olarak hizmet veren bir tür tekrarlayan yapay sinir ağıdır. Kalıpları, anıları depolayabilir daha sonra bunları geri çağırabilir ve ayrıca belirli bir girdiye en yakın eşleşmeyi bularak optimizasyon problemlerini çözmek için kullanılabilir. İnsan belleğini anlamak için iyi bir modeldir.se
+
+Hopfield ağlarının iyi olduğu bazı konular vardır ve eğer bunlara ihtiyaç duyarsanız elinizde böyle bir alternatif olduğunu bilmeniz size avantaj sağlar. Başarılı olduğu bazı konular aşağıdadır:
+
+"Örüntü tanıma": Hopfield ağları, görüntü tanıma ve konuşma tanıma gibi çeşitli uygulamalarda yararlı olan verilerdeki örüntüleri tanımak için eğitilebilir.
+\\"Optimizasyon": Hopfield ağları, bir grafikteki iki nokta arasındaki en kısa yolu bulmak veya bir maliyet fonksiyonunu en aza indirmek gibi optimizasyon problemleri için de kullanılabilir.
+\\"İlişkisel bellek": Hopfield ağları, kısmi bir girdi veya ipucuna dayalı olarak bir belleği geri getirme yeteneği olan ilişkisel bellek için kullanılabilir. Bu, görüntü alma veya doğal dil işleme gibi uygulamalarda faydalı olabilir.
+\\"Sinir ağlarını anlamak": Hopfield ağları bir tür sinir ağıdır ve bunları incelemek sinir ağlarının genel olarak nasıl çalıştığına dair anlayışımızı derinleştirmeye yardımcı olabilir.
+
+Hopfield ağları gerçek hayatta özellikle optimize etme, hatırlama, veri sıkıştırma, veri tamamlama ve desen tanıma gibi alanlarda kullanılmaktadır. Bazı uygulama örnekleri şunlardır:
+
+\\"Yapay sinir ağları": Hopfield ağları, yapay sinir ağları (YSA) alanında kullanılan temel modellerden biridir. YSA, birçok uygulamada kullanılan bir yapay zeka türüdür.
+\\"Mühendislik": Hopfield ağları, mühendislikte yapısal analiz, kaynak tahsisi, veri sıkıştırma ve optimizasyon gibi çeşitli problemlerin çözümünde kullanılmaktadır.
+\\"Biyoloji": Hopfield ağları, nörolojik hastalıkların tedavisi, hafıza araştırmaları ve diğer biyolojik uygulamalar gibi çeşitli alanlarda biyolojik sistemlerin modellemesinde kullanılmaktadır.
+\\"Fizik": Hopfield ağları, manyetik malzemelerin davranışları, spin camları ve magnetoresistive cihazlar gibi fiziksel sistemlerin modellemesinde kullanılmaktadır.
+\\"Finans": Hopfield ağları, finansal verilerin analizi ve öngörüsü, risk yönetimi ve portföy optimizasyonu gibi finansal uygulamalarda kullanılmaktadır.
+
+Gerçek hayatta kullanımına örnek olarak "A review of Hopfield neural networks for solving mathematical programming problems" adlı makaleDE Hopfield sinir ağlarının matematiksel programlama problemlerini çözmek için kullanımını incelemektedir. Makale, Hopfield sinir ağlarının matematiksel programlama problemleri için bir optimizasyon aracı olarak kullanılmasının nasıl gerçekleştirilebileceğini açıklamaktadır.
+Hopfield ağları, birçok matematiksel programlama probleminin çözümü için kullanılabilecek etkili bir araç olabilirler.
+
+Kaynaklar:
+\\ - \url{https://en.wikipedia.org/wiki/Hopfield\_network}
+\\ - \url{https://www.tutorialspoint.com/artificial_neural_network/index.htm}
+\\ - \url{https://chat.openai.com/chat}
+\\ - Article by: \url{https://www.sciencedirect.com/science/article/abs/pii/S1084804519300852}
+
+\section{(Toplam 10 Puan) Boltzman Machine:}
+
+\subsection{(2 Puan)} \textbf{ChatGPT’ye size Boltzman Machine ilgili detaylı bilgi vermesini isteyin. Sorduğunuz soruyu, ChatGPT'nin çıkartığı cevabı aşağı koyun. Bu cevapta anlamadığınız terimleri de ChatGPT’ye sorup, sorduğunuz soruları ve ChatGPT’nin verdiği cevapları da sırayla aşağı koyun.}
+
+Boltzmann makineleri, yapay sinir ağlarının bir türüdür ve özellikle öğrenme (learning) ve optimizasyon (optimization) problemlerini çözmek için kullanılırlar. İlk olarak, 1980'lerde Geoffrey Hinton ve Terry Sejnowski tarafından tanıtılmıştır.
+Boltzmann makineleri, bir dizi gizli nöronun ve bir dizi gözlem nöronunun etkileşimi ile birbirleriyle bağlantılıdır. Bu ağlar, genellikle tam bağlantılıdır, yani her nöron, diğer nöronlarla bağlantılıdır. Bu ağlarda, nöronlar iki durumda olabilirler: açık veya kapalı. Ayrıca, her bağlantı arasında ağırlıklar vardır.
+
+Boltzmann makineleri, bir öğrenme süreci ile öğrenirler. Bu süreç, veri setindeki örnekleri kullanarak, ağın ağırlıklarının uygun bir şekilde ayarlanmasını sağlar. Öğrenme süreci, genellikle bir tür stokastik gradient iniş (stochastic gradient descent) olarak adlandırılan bir optimizasyon tekniği ile gerçekleştirilir.Boltzmann makineleri, birbirleriyle etkileşim içinde olan nöronlar arasında belirli bir enerji fonksiyonuna dayalı olarak çalışırlar. Bu enerji fonksiyonu, ağırlıkların doğru şekilde ayarlanmasıyla minimize edilir. Bu, ağın belirli bir veri örneğiyle eşleşen bir minimum enerji durumuna ilerlemesine neden olur.Boltzmann makineleri, çeşitli uygulamalarda kullanılabilirler, özellikle de tanıma (recognition), sınıflandırma (classification) ve öneri sistemleri (recommendation systems) gibi alanlarda. Bununla birlikte, Boltzmann makineleri, yüksek boyutlu verilerde yavaş çalışabildikleri ve verimlilikleri sınırlı oldukları için sıklıkla diğer yapay sinir ağı modelleriyle birleştirilirler.
+Boltzmann makineleri, derin öğrenme (deep learning) algoritmalarının geliştirilmesinde de kullanılmıştır. Özellikle, Görüntü İşleme (image processing) gibi alanlarda, derin Boltzmann makineleri, yüksek düzeydeki özellikleri tanımlamak için kullanılmıştır.
+
+Stochastic gradient descent (SGD): Makine öğrenmesi ve derin öğrenme gibi alanlarda sıkça kullanılan bir optimizasyon algoritmasıdır. Bu algoritma, bir maliyet fonksiyonu minimize edilirken, model parametrelerinin güncellenmesinde kullanılır.
+
+\subsection{(8 Puan)} \textbf{ChatGPT’nin açıklamalarından ne anladığınızı buraya kendi kelimelerinizle özetleyin. Örneğin ``Boltzman Machine nedir? Ne işe yarar? Neden bilmemiz gerekir bunu? Gerçek hayatta kullanılıyor mu?'' gibi. Anlamadığınız kısımlar varsa ve ChatGPT’nin açıklamaları yeterli gelmezse internet dahil farklı kaynaklardan araştırıp, bilgilerin doğruluğunu sorgulamakta serbestsiniz. Konuyu doğru anlayıp anlamamanız puana etki edecektir. Kullandığınız kaynakları da belirtin!}
+
+Boltzmann Makinesi, denetimsiz öğrenmeyi mümkün kılmak için olasılıksal modelleme kullanan bir yapay sinir ağıdır. Öğrenme ve optimizasyon problemlerini çözmek için kullanılır. Düğümlerin ikili kararlar verdiği ve belirli önyargılarla mevcut olduğu bir tür tekrarlayan sinir ağıdır.
+
+Boltzmann Makinesi, insan düşüncesinin hesaplama sürecini simüle etmek için stokastik bir yaklaşım kullanır ve bu da onu makine öğrenimi ve yapay zeka araştırmalarında önemli bir araç haline getirir.
+\\(Stokastik: değişken, rastlantısal anlamına gelen sıfat)
+
+Boltzmann Makinesi özellikle karmaşık veri kümelerindeki örüntüleri ve altta yatan ilişkileri bulmak için tasarlanmıştır. Bu da onu veri görselleştirme, konuşma tanıma, ilaç tasarımı ve görüntü işleme gibi çok sayıda uygulamada kullanışlı bir araç haline getirmektedir. 
+
+Boltzmann makinesini anlamak, büyük ölçüde veri analizi ve yapay zeka tekniklerine dayanan alanlardaki araştırmacılar ve profesyoneller için önemlidir. Boltzmann Makinesi, bilimsel keşiflerin ve teknolojik yeniliklerin hızını artırmak, sinyal işleme, tavsiye sistemleri ve anomali tespiti gibi gerçek hayat senaryolarında da pratik uygulamalar bulmuştur. 
+Genel olarak, Boltzmann Makinesi günümüzde çok sayıda araştırma ve geliştirme alanıyla ilgili değerli ve çok yönlü bir aracı temsil etmektedir. 
+
+Gerçek hayatta kullanımına örnek olarak "Intrusion detection in smart cities using Restricted Boltzmann Machines" adlı makale, sınırlı Boltzmann makinelerinin kullanımını, akıllı şehirlerde siber saldırı tespiti için bir yöntem olarak ele almaktadır. Makalenin üzerinde durduğu konu sınırlı Boltzmann makinelerinin akıllı şehirlerde siber saldırı tespiti için kullanılabilecek etkili bir araç olmasıdır.
+
+Kaynaklar:
+\\ - \url{https://en.wikipedia.org/wiki/Boltzmann_machine}
+\\ - \url{https://chat.openai.com/chat}
+\\ - \url{https://analyticsindiamag.com/beginners-guide-to-boltzmann-machines/}
+\\ - Article by: \url{https://www.sciencedirect.com/science/article/abs/pii/S0377221708009788}
+
+
+\section{(Toplam 10 Puan) Markov Assumption ve Markov Chain:}
+
+\subsection{(2 Puan)} \textbf{ChatGPT’ye size Markov assumption ve Markov Chain ilgili detaylı bilgi vermesini isteyin. Sorduğunuz soruyu, ChatGPT'nin çıkartığı cevabı aşağı koyun. Bu cevapta anlamadığınız terimleri de ChatGPT’ye sorup, sorduğunuz soruları ve ChatGPT’nin verdiği cevapları da sırayla aşağı koyun.}
+
+Markov kuralı (Markov assumption) ve Markov zincirleri, özellikle zaman serisi verileri analizinde kullanılan matematiksel araçlardır.
+Markov kuralı, bir sürecin mevcut durumunun, yalnızca doğrudan önceki durumuna bağlı olduğunu belirtir. Başka bir deyişle, bir durumun gelecekteki olası durumları, mevcut durumdan bağımsız olarak, sadece son durumdan etkilenir. Bu kurala, "geçmiş bağımsızlığı" (past independence) denir. Bu bağımsızlık, zaman serilerinin analizinde faydalı bir varsayımdır.
+
+Markov past independence: Bir Markov zincirinin bir özelliğidir ve "Markov zinciri" terimi, bir dizi olayın zaman içindeki olasılıklı geçişlerini modellemek için kullanılan bir matematiksel kavramdır. Bu özellik, bir olayın olasılığının, sadece bir önceki olaya değil, tüm geçmiş olaylara bağlı olmadığını ifade eder.
+
+Markov zinciri, bir dizi bağımsız durumdan oluşan bir süreçtir. Bu durumlar, Markov kuralına uygun olarak, yalnızca doğrudan önceki duruma bağlıdır. Markov zinciri, bir dizi olası durum ve her bir durumda gerçekleşme olasılığı ile tanımlanır. Bir Markov zincirindeki olasılıklar, bir geçiş matrisi olarak adlandırılan bir matriste saklanır. Bu matrisin her bir öğesi, bir durumdan başka bir duruma geçme olasılığını gösterir.
+Markov zincirleri, birçok uygulamada kullanılırlar, özellikle de öngörü (forecasting) ve optimizasyon (optimization) problemlerinde. Örneğin, bir hava durumu tahmini yaparken, mevcut hava durumuna dayalı olarak olası gelecekteki hava durumlarını tahmin etmek için bir Markov zinciri kullanılabilir. Benzer şekilde, stokastik optimizasyon problemlerinde, Markov zincirleri, olası durumlar arasında dolaşarak en iyi çözüme ulaşmak için kullanılabilir.
+Markov zincirleri, ayrıca, makine öğrenmesi algoritmalarında da kullanılırlar. Özellikle, belirli bir durumda verilen bir dizi gözlemi kullanarak olası sonraki durumları tahmin etmek için kullanılan HMM (Hidden Markov Model) olarak adlandırılan bir model vardır. Bu model, özellikle doğal dil işleme (natural language processing) ve konuşma tanıma (speech recognition) gibi uygulamalarda kullanılır.
+
+Gizli Markov modeli (HMM): Bir dizi rasgele değişken arasındaki ilişkileri modelleyen istatistiksel bir modeldir. HMM, Markov zinciri ve olasılık teorisi temelinde oluşturulmuştur ve sıklıkla doğal dil işleme, konuşma tanıma, müzik analizi, finansal piyasaların modellenmesi, biyoinformatik, vb. gibi alanlarda kullanılmaktadır.
+
+\subsection{(8 Puan)} \textbf{ChatGPT’nin açıklamalarından ne anladığınızı buraya kendi kelimelerinizle özetleyin. Örneğin ``Markov assumption ve Markov Chain nedir? Ne işe yarar? Neden bilmemiz gerekir bunu? Gerçek hayatta kullanılıyor mu?'' gibi. Anlamadığınız kısımlar varsa ve ChatGPT’nin açıklamaları yeterli gelmezse internet dahil farklı kaynaklardan araştırıp, bilgilerin doğruluğunu sorgulamakta serbestsiniz. Konuyu doğru anlayıp anlamamanız puana etki edecektir. Kullandığınız kaynakları da belirtin!}
+
+ Markov kuralı (Markov assumption) ve Markov zincirleri, özellikle zaman serisi verileri analizinde kullanılan matematiksel araçlardır. Bu kurala, "geçmiş bağımsızlığı" (past independence) denir. Başka bir deyişle, bir durumun gelecekteki olası durumları, sadece son durumdan etkilenir , bir önceki durumlar herhangi bir şekilde ileride oluşacak olasılıkları etkilemez.
+
+ Markov zincirindeki olasılıklı geçişlerin modellemesi için kullanılır. Markov kuralı, özellikle doğal dil işleme, konuşma tanıma , finansal piyasaların modellenmesi, biyoinformatik gibi alanlarda kullanılan gizli Markov modelleri (HMM) gibi pek çok makine öğrenmesi için önem taşır.
+
+ Örneğin, doğal dil işleme uygulamalarında, Markov kuralı, bir kelimenin önceki kelimeye veya kelime dizisine bağlı olarak ne tür bir kelime olabileceğini tahmin etmek için kullanılır. Benzer şekilde, konuşma tanıma uygulamalarında, Markov kuralı, bir fonem veya kelime sonrasında ne tür bir fonem veya kelime gelebileceğini tahmin etmek için kullanılır.
+ 
+ Gercek hayatta kullanimina ̈ornek olarak "The Markov Process in Medical Prognosis" makalesi tibbi prognozda Markov surecinin kullanimini ele alan bir makaledir. Markov sureci, matematiksel bir modeldir ve cesitli saglik sonuclarinin olasi olasiliklarini tahmin etmek icin kullanilir. Bu makale, Markov surecinin tibbi prognozdaki kullanimini ve bu modelin hastaligin ilerlemesi ve uygun tedavi seceneklerinin belirlenmesi icin nasil kullanilabilecegini aciklamaktadir.
+
+ Makalenin amacı, tıbbi karar verme süreçlerine yardımcı olmak için Markov sürecinin kullanımını açıklamak ve tıbbi prognozda bu modelin nasıl uygulanabileceğini göstermektir.
+
+ Kaynaklar:
+\\ - \url{https://chat.openai.com/chat}
+\\ - \url{https://en.wikipedia.org/wiki/Markov_chain}
+\\ - \url{https://en.wikipedia.org/wiki/Markov_property}
+\\ - Article by: \url{https://journals.sagepub.com/doi/abs/10.1177/0272989X8300300403?journalCode=mdma}
+ 
+\section{(Toplam 20 Puan) Feed Forward:}
+ 
+\begin{itemize}
+    \item Forward propagation için, input olarak şu X matrisini verin (tensöre çevirmeyi unutmayın):\\
+    $X = \begin{bmatrix}
+        1 & 2 & 3\\
+        4 & 5 & 6
+        \end{bmatrix}$
+    Satırlar veriler (sample'lar), kolonlar öznitelikler (feature'lar).
+    \item Bir adet hidden layer olsun ve içinde tanh aktivasyon fonksiyonu olsun
+    \item Hidden layer'da 50 nöron olsun
+    \item Bir adet output layer olsun, tek nöronu olsun ve içinde sigmoid aktivasyon fonksiyonu olsun
+\end{itemize}
+
+Tanh fonksiyonu:\\
+$f(x) = \frac{exp(x) - exp(-x)}{exp(x) + exp(-x)}$
+\vspace{.2in}
+
+Sigmoid fonksiyonu:\\
+$f(x) = \frac{1}{1 + exp(-x)}$
+
+\vspace{.2in}
+ \textbf{Pytorch kütüphanesi ile, ama kütüphanenin hazır aktivasyon fonksiyonlarını kullanmadan, formülünü verdiğim iki aktivasyon fonksiyonunun kodunu ikinci haftada yaptığımız gibi kendiniz yazarak bu yapay sinir ağını oluşturun ve aşağıdaki üç soruya cevap verin.}
+ 
+\subsection{(10 Puan)} \textbf{Yukarıdaki yapay sinir ağını çalıştırmadan önce pytorch için Seed değerini 1 olarak set edin, kodu aşağıdaki kod bloğuna ve altına da sonucu yapıştırın:}
+
+% Latex'de kod koyabilirsiniz python formatında. Aşağıdaki örnekleri silip içine kendi kodunuzu koyun
+\begin{python}
+#Import libraries
+import torch
+import torch.nn as nn
+
+#Define activation functions
+def tanh_active(x):
+    return (torch.exp(x) - torch.exp(-x)) / (torch.exp(x) + torch.exp(-x))
+
+def sigmoid_active(x):
+    return 1 / (1 + torch.exp(-x))
+
+#Question 4.1
+torch.manual_seed(1)  # Set the seed value to 1
+
+my_tensor = torch.tensor([[1, 2, 3], [4, 5, 6]], dtype=torch.float)  # Convert matrix X to tensor
+
+class AnnModel(nn.Module):
+    def __init__(self):
+        super(AnnModel, self).__init__()
+        self.hidden = nn.Linear(3, 50)  # This layer takes 3 input features and combines them into 50 output features.
+        self.output = nn.Linear(50, 1)  # This layer takes 50 input features and combines them into 1 output feature.
+
+    def forward(self, x):
+        x = tanh_active(self.hidden(x))  # Tanh activation function
+        x = sigmoid_active(self.output(x))  # Sigmoid activation function
+        return x
+
+model = AnnModel()  # Create ANN Model
+print(model(my_tensor))
+\end{python}
+
+tensor([[0.4892],
+        [0.5566]])
+\subsection{(5 Puan)} \textbf{Yukarıdaki yapay sinir ağını çalıştırmadan önce Seed değerini öğrenci numaranız olarak değiştirip, kodu aşağıdaki kod bloğuna ve altına da sonucu yapıştırın:}
+
+\begin{python}
+#Import libraries
+import torch
+import torch.nn as nn
+
+#Define activation functions
+def tanh_active(x):
+    return (torch.exp(x) - torch.exp(-x)) / (torch.exp(x) + torch.exp(-x))
+
+def sigmoid_active(x):
+    return 1 / (1 + torch.exp(-x))
+
+# Question 4.2
+torch.manual_seed(190401038)  # Set the seed value to school student number
+
+my_tensor = torch.tensor([[1, 2, 3], [4, 5, 6]], dtype=torch.float)  # Convert matrix X to tensor
+
+class AnnModel(nn.Module):
+    def __init__(self):
+        super(AnnModel, self).__init__()
+        self.hidden = nn.Linear(3, 50)  # This layer takes 3 input features and combines them into 50 output features.
+        self.output = nn.Linear(50, 1)  # This layer takes 50 input features and combines them into 1 output feature.
+
+    def forward(self, x):
+        x = tanh_active(self.hidden(x))  # Tanh activation function
+        x = sigmoid_active(self.output(x))  # Sigmoid activation function
+        return x
+
+model = AnnModel()  # Create ANN Model
+print(model(my_tensor))
+\end{python}
+
+tensor([[0.4647],
+        [0.5292]])
+\subsection{(5 Puan)} \textbf{Kodlarınızın ve sonuçlarınızın olduğu jupyter notebook'un Github repository'sindeki linkini aşağıdaki url kısmının içine yapıştırın. İlk sayfada belirttiğim gün ve saate kadar halka açık (public) olmasın:}
+% size ait Github olmak zorunda, bu vize için ayrı bir github repository'si açıp notebook'u onun içine koyun. Kendine ait olmayıp da arkadaşının notebook'unun linkini paylaşanlar 0 alacak.
+
+\url{https://github.com/ithesadson/ithesadson-Artificial-Neural-Networks_Project/blob/main/Feed-Forward.ipynb}
+
+\section{(Toplam 40 Puan) Multilayer Perceptron (MLP):} 
+\textbf{Bu bölümdeki sorularda benim vize ile beraber paylaştığım Prensesi İyileştir (Cure The Princess) Veri Seti parçaları kullanılacak. Hikaye şöyle (soruyu çözmek için hikaye kısmını okumak zorunda değilsiniz):} 
+
+``Bir zamanlar, çok uzaklarda bir ülkede, ağır bir hastalığa yakalanmış bir prenses yaşarmış. Ülkenin kralı ve kraliçesi onu iyileştirmek için ellerinden gelen her şeyi yapmışlar, ancak denedikleri hiçbir çare işe yaramamış.
+
+Yerel bir grup köylü, herhangi bir hastalığı iyileştirmek için gücü olduğu söylenen bir dizi sihirli malzemeden bahsederek kral ve kraliçeye yaklaşmış. Ancak, köylüler kral ile kraliçeyi, bu malzemelerin etkilerinin patlayıcı olabileceği ve son zamanlarda yaşanan kuraklıklar nedeniyle bu malzemelerden sadece birkaçının herhangi bir zamanda bulunabileceği konusunda uyarmışlar. Ayrıca, sadece deneyimli bir simyacı bu özelliklere sahip patlayıcı ve az bulunan malzemelerin belirli bir kombinasyonunun prensesi iyileştireceğini belirleyebilecekmiş.
+
+Kral ve kraliçe kızlarını kurtarmak için umutsuzlar, bu yüzden ülkedeki en iyi simyacıyı bulmak için yola çıkmışlar. Dağları tepeleri aşmışlar ve nihayet "Yapay Sinir Ağları Uzmanı" olarak bilinen yeni bir sihirli sanatın ustası olarak ün yapmış bir simyacı bulmuşlar.
+
+Simyacı önce köylülerin iddialarını ve her bir malzemenin alınan miktarlarını, ayrıca iyileşmeye yol açıp açmadığını incelemiş. Simyacı biliyormuş ki bu prensesi iyileştirmek için tek bir şansı varmış ve bunu doğru yapmak zorundaymış. (Original source: \url{https://www.kaggle.com/datasets/unmoved/cure-the-princess})
+
+(Buradan itibaren ChatGPT ve Dr. Ulya Bayram'a ait hikayenin devamı)
+
+Simyacı, büyülü bileşenlerin farklı kombinasyonlarını analiz etmek ve denemek için günler harcamış. Sonunda birkaç denemenin ardından prensesi iyileştirecek çeşitli karışım kombinasyonları bulmuş ve bunları bir veri setinde toplamış. Daha sonra bu veri setini eğitim, validasyon ve test setleri olarak üç parçaya ayırmış ve bunun üzerinde bir yapay sinir ağı eğiterek kendi yöntemi ile prensesi iyileştirme ihtimalini hesaplamış ve ikna olunca kral ve kraliçeye haber vermiş. Heyecanlı ve umutlu olan kral ve kraliçe, simyacının prensese hazırladığı ilacı vermesine izin vermiş ve ilaç işe yaramış ve prenses hastalığından kurtulmuş.
+
+Kral ve kraliçe, kızlarının hayatını kurtardığı için simyacıya krallıkta kalması ve çalışmalarına devam etmesi için büyük bir araştırma bütçesi ve çok sayıda GPU'su olan bir server vermiş. İyileşen prenses de kendisini iyileştiren yöntemleri öğrenmeye merak salıp, krallıktaki üniversitenin bilgisayar mühendisliği bölümüne girmiş ve mezun olur olmaz da simyacının yanında, onun araştırma grubunda çalışmaya başlamış. Uzun yıllar birlikte krallıktaki insanlara, hayvanlara ve doğaya faydalı olacak yazılımlar geliştirmişler, ve simyacı emekli olduğunda prenses hem araştırma grubunun hem de krallığın lideri olarak hayatına devam etmiş.
+
+Prenses, kendisini iyileştiren veri setini de, gelecekte onların izinden gidecek bilgisayar mühendisi prensler ve prensesler başkalarına faydalı olabilecek yapay sinir ağları oluşturmayı öğrensinler diye halka açmış ve sınavlarda kullanılmasını salık vermiş.''
+
+\textbf{İki hidden layer'lı bir Multilayer Perceptron (MLP) oluşturun beşinci ve altıncı haftalarda yaptığımız gibi. Hazır aktivasyon fonksiyonlarını kullanmak serbest. İlk hidden layer'da 100, ikinci hidden layer'da 50 nöron olsun. Hidden layer'larda ReLU, output layer'da sigmoid aktivasyonu olsun.}
+
+\textbf{Output layer'da kaç nöron olacağını veri setinden bakıp bulacaksınız. Elbette bu veriye uygun Cross Entropy loss yöntemini uygulayacaksınız. Optimizasyon için Stochastic Gradient Descent yeterli. Epoch sayınızı ve learning rate'i validasyon seti üzerinde denemeler yaparak (loss'lara overfit var mı diye bakarak) kendiniz belirleyeceksiniz. Batch size'ı 16 seçebilirsiniz.}
+
+\newpage
+
+\subsection{(10 Puan)} \textbf{Bu MLP'nin pytorch ile yazılmış class'ının kodunu aşağı kod bloğuna yapıştırın:}
+
+\begin{python}
+# Define the model architecture
+class MLP(nn.Module):
+    def __init__(self, input_dim):
+        super().__init__()
+        # 13 features input dimension to 100 neurons in the first hidden layer
+        self.fc1 = nn.Linear(13, 100)
+        # 100 neurons in the first hidden layer to 50 neurons in the second hidden layer
+        self.fc2 = nn.Linear(100, 50)
+        # 50 neurons in the second hidden layer to 1 neuron in the output layer
+        self.fc3 = nn.Linear(50, 1)
+        # ReLU activation function for hidden layers
+        self.relu = nn.ReLU()
+        # Sigmoid activation function for output layer
+        self.sigmoid = nn.Sigmoid()
+
+    def forward(self, x):
+        # Forward pass through the first hidden layer followed by ReLU activation
+        x = self.relu(self.fc1(x))
+        # Forward pass through the second hidden layer followed by ReLU activation
+        x = self.relu(self.fc2(x))
+        # Forward pass through the output layer followed by Sigmoid activation
+        x = self.sigmoid(self.fc3(x))
+        return x
+\end{python}
+
+\subsection{(10 Puan)} \textbf{SEED=öğrenci numaranız set ettikten sonra altıncı haftada yazdığımız gibi training batch'lerinden eğitim loss'ları, validation batch'lerinden validasyon loss değerlerini hesaplayan kodu aşağıdaki kod bloğuna yapıştırın ve çıkan figürü de alta ekleyin.}
+
+\begin{python}
+    for epoch in range(num_epochs):
+        # Train for one epoch
+        model.train()
+        train_loss = 0.0
+        for x_batch, y_batch in train_loader:
+            optimizer.zero_grad()
+            y_pred = model(x_batch)
+            loss = criterion(y_pred, y_batch.unsqueeze(1))
+            loss.backward()
+            optimizer.step()
+            train_loss += loss.item()
+        train_loss /= len(train_loader)
+
+        # Evaluate on validation set
+        model.eval()
+        val_loss = 0.0
+        with torch.no_grad():
+            for x_batch, y_batch in val_loader:
+                y_pred = model(x_batch)
+                val_loss += criterion(y_pred, y_batch.unsqueeze(1)).item()
+            val_loss /= len(val_loader)
+        
+        #Add the training and validation losses to an array.
+        list_train_loss.append(train_loss)
+        list_val_loss.append(val_loss)
+\end{python}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.75\textwidth]{Loss.png}
+    \caption{Train and Validation loss graph}
+    \label{fig:my_pic}
+\end{figure}
+
+\newpage
+\subsection{(10 Puan)} \textbf{SEED=öğrenci numaranız set ettikten sonra altıncı haftada ödev olarak verdiğim gibi earlystopping'deki en iyi modeli kullanarak, Prensesi İyileştir test setinden accuracy, F1, precision ve recall değerlerini hesaplayan kodu yazın ve sonucu da aşağı yapıştırın. \%80'den fazla başarı bekliyorum test setinden. Daha düşükse başarı oranınız, nerede hata yaptığınızı bulmaya çalışın. \%90'dan fazla başarı almak mümkün (ben denedim).}
+
+\begin{python}
+# Evaluate on test set
+model.eval()
+y_pred = []
+with torch.no_grad():
+    for x_batch, y_batch in test_loader:
+        y_pred_batch = model(x_batch)
+        y_pred_batch = (y_pred_batch >= 0.5).float()
+        y_pred.append(y_pred_batch)
+y_pred = torch.cat(y_pred, dim=0).numpy()
+
+acc = accuracy_score(y_test, y_pred)
+precision = precision_score(y_test, y_pred)
+recall = recall_score(y_test, y_pred)
+f1 = f1_score(y_test, y_pred)
+print(f"Test Accuracy: {acc:.4f}, Test F1 Score: {f1:.4f}, Test Precision:{precision:.4f} , Test Recall:{recall:.4f}")
+\end{python}
+
+Test Accuracy: 0.9482, Test F1 Score: 0.9474, Test Precision:0.9677, Test Recall:0.9278
+\newpage
+\subsection{(5 Puan)} \textbf{Tüm kodların CPU'da çalışması ne kadar sürüyor hesaplayın. Sonra to device yöntemini kullanarak modeli ve verileri GPU'ya atıp kodu bir de böyle çalıştırın ve ne kadar sürdüğünü hesaplayın. Süreleri aşağıdaki tabloya koyun. GPU için Google Colab ya da Kaggle'ı kullanabilirsiniz, iki ortam da her hafta saatlerce GPU hakkı veriyor.}
+
+\begin{table}[ht!]
+    \centering
+    \caption{CPU and GPU time comparison}
+    \begin{tabular}{c|c}
+        Ortam & Süre (saniye) \\\hline
+        CPU & CPU Run time: 201.2263171672821\\
+        GPU & GPU Run time: 148.2877426147461\\
+    \end{tabular}
+    \label{tab:my_table}
+\end{table}
+
+\subsection{(3 Puan)} \textbf{Modelin eğitim setine overfit etmesi için elinizden geldiği kadar kodu gereken şekilde değiştirin, validasyon loss'unun açıkça yükselmeye başladığı, training ve validation loss'ları içeren figürü aşağı koyun ve overfit için yaptığınız değişiklikleri aşağı yazın. Overfit, tam bir çanak gibi olmalı ve yükselmeli. Ona göre parametrelerle oynayın.}
+
+1) Learning Rate degeri 0.001'den 0.1 olarak degistirildi.\\ 
+2) num\_epochs degeri 500'den 2000 olarak degistirildi. \\
+3) early\_stop degeri 20'den None olarak degistirildi.(En iyi loss degerini bulma devre disi birak.)
+
+% Figür aşağı
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.75\textwidth]{Overfit.png}
+    \caption{Overfitted Graph}
+    \label{fig:my_pic}
+\end{figure}
+
+\subsection{(2 Puan)} \textbf{Beşinci soruya ait tüm kodların ve cevapların olduğu jupyter notebook'un Github linkini aşağıdaki url'e koyun.}
+
+\url{https://github.com/ithesadson/ithesadson-Artificial-Neural-Networks_Project/blob/main/Cure-the-Princess.ipynb}
+
+\section{(Toplam 10 Puan)} \textbf{Bir önceki sorudaki Prensesi İyileştir problemindeki yapay sinir ağınıza seçtiğiniz herhangi iki farklı regülarizasyon yöntemi ekleyin ve aşağıdaki soruları cevaplayın.} 
+
+\subsection{(2 puan)} \textbf{Kodlarda regülarizasyon eklediğiniz kısımları aşağı koyun:} 
+
+\begin{python}
+class MLP(nn.Module):
+    def __init__(self, input_dim,dropout_prob):
+        super().__init__()
+        self.fc1 = nn.Linear(13, 100)
+        self.dropout1 = nn.Dropout(dropout_prob)
+        self.fc2 = nn.Linear(100, 50)
+        self.dropout2 = nn.Dropout(dropout_prob)
+        self.fc3 = nn.Linear(50, 1)
+        self.relu = nn.ReLU()
+        self.sigmoid = nn.Sigmoid()
+
+    def forward(self, x):
+        x = self.relu(self.fc1(x))
+        x = self.dropout1(x)
+        x = self.relu(self.fc2(x))
+        x = self.dropout2(x)
+        x = self.sigmoid(self.fc3(x))
+        return x
+    
+    def l2_regularization(self, weight_decay):
+        l2_reg = None
+        for name, param in self.named_parameters():
+            if name.endswith("weight"):
+                if l2_reg is None:
+                    l2_reg = param.norm(2)**2
+                else:
+                    l2_reg = l2_reg + param.norm(2)**2
+
+        return weight_decay*l2_reg
+
+model = MLP(input_dim=x_train.shape[1],dropout_prob=0.5)
+\end{python}
+
+\subsection{(2 puan)} \textbf{Test setinden yeni accuracy, F1, precision ve recall değerlerini hesaplayıp aşağı koyun:}
+
+Test Accuracy: 0.9352, Test F1 Score: 0.9340, Test Precision:0.9568, Test Recall:0.9124
+
+\subsection{(5 puan)} \textbf{Regülarizasyon yöntemi seçimlerinizin sebeplerini ve sonuçlara etkisini yorumlayın:}
+
+L2 ve Dropout seçme nedenimiz, modelimizin aşırı öğrenmeye eğilimini engellemek amaçlıydı. Bu nedenle, L2 regularizasyonu ile ağırlıkları sınırlayarak modelin daha az karmaşık hale gelmesini sağladık ve aynı zamanda dropout kullanarak ağın genelleme yeteneğini artırdık. Bu yöntemlerin kullanımı, test accuracy sonuçlarımızda da görüleceği gibi overfitting'i azaltarak daha iyi sonuçlar elde etmemize yardımcı oldu
+
+L2 ve Dropout yöntemlerinin birlikte kullanıldığı senaryoda "test accuracy" değeri azaldı.
+Regülarizasyonlar bazı özelliklerin çıkarılmasına neden olacağından modelin performansında bir azalma olabilir.Bu, overfitting'i önlemek adına bir trade-off olarak kabul edilir.
+
+\subsection{(1 puan)} \textbf{Sonucun github linkini  aşağıya koyun:}
+
+\url{https://github.com/ithesadson/ithesadson-Artificial-Neural-Networks_Project/blob/main/Add-regularization.ipynb}
+
+\end{document}
